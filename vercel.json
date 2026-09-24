@@ -1,5 +1,6 @@
 {
   "version": 2,
   "framework": null,
+  "buildCommand": "mkdir -p web/cases && cp cases/HHG-*.json web/cases/",
   "outputDirectory": "web"
 }
