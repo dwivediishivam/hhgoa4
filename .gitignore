@@ -1,0 +1,25 @@
+# Local credentials and deployment configuration
+.env
+.env.*
+!.env.example
+
+# Runtime/build artifacts
+node_modules/
+.next/
+dist/
+build/
+coverage/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Local data: the challenge source dataset is not a repository artifact
+ps TigerGraph Agentic Fraud Investigation HHGOA/raw_data/
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/

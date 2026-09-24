@@ -1,0 +1,64 @@
+{
+  "case_id": "HHG-019",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.66,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3503878"
+    ],
+    "first_suspicious_txn_id": "3503878",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "Windows | other | chrome 61.0 | 1280x720"
+    ],
+    "exposure_usd": 99.92,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $99.92 at 2016-12-01 17:28:53 has model risk score 0.90; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3503878",
+          "C07987-K2"
+        ]
+      },
+      {
+        "claim": "Online identity profile: Windows | other | chrome 61.0 | 1280x720. Device-new=True; proxy signal=False.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3503878"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2011",
+      "CC-2087",
+      "CC-2860"
+    ],
+    "summary": "HHG-019 reviewed 3503878 using transaction timeline, identity signals, and prior-case memory. Assessment: uncertain (0.66), pattern none.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-019"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [],
+    "final": [],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Current evidence has been documented; the case remains open for the recommended controlled action.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

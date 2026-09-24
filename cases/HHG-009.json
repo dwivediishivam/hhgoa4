@@ -1,0 +1,87 @@
+{
+  "case_id": "HHG-009",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.86,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3581141"
+    ],
+    "first_suspicious_txn_id": "3581141",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 30.02,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $30.02 at 2016-12-28 12:10:53 has model risk score 0.28; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3581141",
+          "C08299-K1"
+        ]
+      },
+      {
+        "claim": "Customer states they did not make the transaction and retains the card",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "C08299",
+          "C08299-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "HHG-009 reviewed 3581141 using transaction timeline, identity signals, and prior-case memory. Assessment: fraud (0.86), pattern none.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-009"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 4,
+      "assumed_response": "Customer states they did not make the transaction and retains the card"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: customer dispute requires an internal case"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1/Policy 3a: obtain authorization evidence before containment"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: customer denied transaction"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: unauthorized activity requires internal case"
+      }
+    ],
+    "what_changed": "The controlled customer-validation response was incorporated and the policy decision was recomputed."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Customer denial settled authorization.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

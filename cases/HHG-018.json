@@ -1,0 +1,115 @@
+{
+  "case_id": "HHG-018",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.34,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Flagged in_person transaction of $39.08 at 2016-11-27 13:41:26 has model risk score 0.48; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3491361",
+          "C02354-K2"
+        ]
+      },
+      {
+        "claim": "Timeline review found 158 transactions in the 48-hour investigation window.",
+        "source": "graph",
+        "ref": "q_card_timeline",
+        "entity_ids": [
+          "3491361"
+        ]
+      },
+      {
+        "claim": "Customer confirms this is their recurring purchase",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "C02354",
+          "C02354-K2"
+        ]
+      },
+      {
+        "claim": "Prior history contains at least two materially matching channel/product/amount transactions; this is treated as a recurring-charge hypothesis.",
+        "source": "graph",
+        "ref": "q_card_timeline",
+        "entity_ids": [
+          "3491361"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0255",
+      "CC-0405",
+      "CC-0454"
+    ],
+    "summary": "HHG-018 reviewed 3491361 using transaction timeline, identity signals, and prior-case memory. Assessment: legitimate (0.34), pattern none.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-018"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 4,
+      "assumed_response": "Customer confirms this is their recurring purchase"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: customer dispute requires an internal case"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1/Policy 3a: obtain authorization evidence before containment"
+      },
+      {
+        "action": "WARN_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: provide recurring-charge guidance"
+      }
+    ],
+    "final": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R7: disputed charge matches recurring legitimate pattern"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: confirm recurring charge with cardholder"
+      },
+      {
+        "action": "WARN_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: provide recurring-charge guidance"
+      }
+    ],
+    "what_changed": "The controlled customer-validation response was incorporated and the policy decision was recomputed."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Current evidence has been documented; the case remains open for the recommended controlled action.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

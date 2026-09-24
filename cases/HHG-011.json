@@ -1,0 +1,109 @@
+{
+  "case_id": "HHG-011",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.86,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3583368"
+    ],
+    "first_suspicious_txn_id": "3583368",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "SM-G610F Build/NRD90M | chrome 66.0 for android"
+    ],
+    "exposure_usd": 131.3,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $131.30 at 2016-12-29 03:27:44 has model risk score 0.39; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3583368",
+          "C11923-K2"
+        ]
+      },
+      {
+        "claim": "Timeline review found 148 transactions in the 48-hour investigation window.",
+        "source": "graph",
+        "ref": "q_card_timeline",
+        "entity_ids": [
+          "3583368"
+        ]
+      },
+      {
+        "claim": "Online identity profile: SM-G610F Build/NRD90M | chrome 66.0 for android. Device-new=True; proxy signal=False.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3583368"
+        ]
+      },
+      {
+        "claim": "Customer states they did not make the transaction and retains the card",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "C11923",
+          "C11923-K2"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0031",
+      "CC-0290",
+      "CC-1056"
+    ],
+    "summary": "HHG-011 reviewed 3583368 using transaction timeline, identity signals, and prior-case memory. Assessment: fraud (0.86), pattern card not present new device.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-011"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 4,
+      "assumed_response": "Customer states they did not make the transaction and retains the card"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: customer dispute requires an internal case"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1/Policy 3a: obtain authorization evidence before containment"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: customer denied transaction"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: unauthorized activity requires internal case"
+      }
+    ],
+    "what_changed": "The controlled customer-validation response was incorporated and the policy decision was recomputed."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Customer denial settled authorization.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

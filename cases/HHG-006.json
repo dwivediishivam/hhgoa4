@@ -1,0 +1,132 @@
+{
+  "case_id": "HHG-006",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.86,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3476602",
+      "3476633",
+      "3476665",
+      "3476682"
+    ],
+    "first_suspicious_txn_id": "3476602",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080"
+    ],
+    "exposure_usd": 1906.07,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $482.12 at 2016-11-21 20:30:00 has model risk score 0.25; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3476682",
+          "C07297-K1"
+        ]
+      },
+      {
+        "claim": "Timeline review found 8 transactions in the 48-hour investigation window.",
+        "source": "graph",
+        "ref": "q_card_timeline",
+        "entity_ids": [
+          "3476602",
+          "3476633",
+          "3476665",
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Online identity profile: Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080. Device-new=True; proxy signal=False.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Customer states they did not make the transaction and retains the card",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "C07297",
+          "C07297-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0011",
+      "CC-0018",
+      "CC-0019"
+    ],
+    "summary": "HHG-006 reviewed 3476682 using transaction timeline, identity signals, and prior-case memory. Assessment: fraud (0.86), pattern card not present new device.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-006"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 4,
+      "assumed_response": "Customer states they did not make the transaction and retains the card"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: customer dispute requires an internal case"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1/Policy 3a: obtain authorization evidence before containment"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: uncertainty with exposure/conflict requires escalation"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: customer denied transaction"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: unauthorized activity requires internal case"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R2: report threshold or shared fraud link met"
+      }
+    ],
+    "what_changed": "The controlled customer-validation response was incorporated and the policy decision was recomputed."
+  },
+  "sar": {
+    "file": true,
+    "reason": "Policy 3a/R2: strong suspicion meets a report threshold.",
+    "narrative": "On 2016-11-21, customer C07297 reported or was alerted to activity on card C07297-K1. The reviewed transaction 3476682 was a online purchase of $482.12. The transaction occurred at 2016-11-21 20:30:00 under product code C. The bank's detection model assigned a risk score of 0.25, which prompted investigation. Graph review identified the following pattern: card not present new device. The customer denied authorization or evidence established strong suspicion, and the bank assessed fraud probability at 0.86. The total identified suspicious exposure is $1906.07. The bank created an internal case, preserved supporting transaction and graph evidence, and will seek the required approval for containment and filing.",
+    "subjects": [
+      "C07297",
+      "C07297-K1",
+      "3476682"
+    ],
+    "total_amount_usd": 1906.07,
+    "activity_dates": [
+      "2016-11-21",
+      "2016-11-21"
+    ]
+  },
+  "stop_reason": "Customer denial settled authorization.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

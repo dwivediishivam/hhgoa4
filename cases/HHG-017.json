@@ -1,0 +1,72 @@
+{
+  "case_id": "HHG-017",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.5,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3450629"
+    ],
+    "first_suspicious_txn_id": "3450629",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "Windows | Windows 10 | chrome 65.0 | 1920x1080"
+    ],
+    "exposure_usd": 100.09,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $100.09 at 2016-11-11 23:46:24 has model risk score 0.57; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3450629",
+          "C04570-K1"
+        ]
+      },
+      {
+        "claim": "Timeline review found 3 transactions in the 48-hour investigation window.",
+        "source": "graph",
+        "ref": "q_card_timeline",
+        "entity_ids": [
+          "3450629"
+        ]
+      },
+      {
+        "claim": "Online identity profile: Windows | Windows 10 | chrome 65.0 | 1920x1080. Device-new=False; proxy signal=False.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3450629"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1383",
+      "CC-0001",
+      "CC-0007"
+    ],
+    "summary": "HHG-017 reviewed 3450629 using transaction timeline, identity signals, and prior-case memory. Assessment: uncertain (0.50), pattern card not present fraud.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-017"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [],
+    "final": [],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Current evidence has been documented; the case remains open for the recommended controlled action.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

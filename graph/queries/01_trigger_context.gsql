@@ -1,0 +1,10 @@
+CREATE QUERY q_trigger_context(VERTEX<FG_Transaction> txn) FOR GRAPH FraudGraph {
+  start = {txn};
+  cards = SELECT c FROM start:t -(<FG_MADE)- FG_Card:c;
+  customers = SELECT customer FROM cards:c -(<FG_OWNS)- FG_Customer:customer;
+  devices = SELECT d FROM start:t -(FG_FROM_DEVICE>)- FG_DeviceProfile:d;
+  regions = SELECT r FROM start:t -(FG_BILLED_IN>)- FG_BillingRegion:r;
+  purchaser_domains = SELECT e FROM start:t -(FG_PURCHASER_EMAIL>)- FG_EmailDomain:e;
+  recipient_domains = SELECT e FROM start:t -(FG_RECIPIENT_EMAIL>)- FG_EmailDomain:e;
+  PRINT start, cards, customers, devices, regions, purchaser_domains, recipient_domains;
+}

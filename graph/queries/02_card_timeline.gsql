@@ -1,0 +1,6 @@
+CREATE QUERY q_card_timeline(VERTEX<FG_Card> card, DATETIME window_start, DATETIME window_end) FOR GRAPH FraudGraph {
+  start = {card};
+  txns = SELECT t FROM start:c -(FG_MADE>)- FG_Transaction:t
+    WHERE t.ts >= window_start AND t.ts <= window_end;
+  PRINT txns;
+}

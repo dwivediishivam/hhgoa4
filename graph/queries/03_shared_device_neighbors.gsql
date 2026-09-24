@@ -1,0 +1,8 @@
+CREATE QUERY q_shared_device_neighbors(VERTEX<FG_DeviceProfile> device, DATETIME window_start, DATETIME window_end) FOR GRAPH FraudGraph {
+  start = {device};
+  txns = SELECT t FROM start:d -(<FG_FROM_DEVICE)- FG_Transaction:t
+    WHERE t.ts >= window_start AND t.ts <= window_end;
+  cards = SELECT c FROM txns:t -(<FG_MADE)- FG_Card:c;
+  related_cases = SELECT cc FROM cards:c -(<FG_ON_CARD)- FG_ClosedCase:cc;
+  PRINT start, txns, cards, related_cases;
+}

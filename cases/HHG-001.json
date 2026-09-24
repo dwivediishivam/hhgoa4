@@ -1,0 +1,86 @@
+{
+  "case_id": "HHG-001",
+  "case": {
+    "status": "open",
+    "verdict": "uncertain",
+    "fraud_probability": 0.42,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3514030"
+    ],
+    "first_suspicious_txn_id": "3514030",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 77.07,
+    "evidence": [
+      {
+        "claim": "Flagged in_person transaction of $77.07 at 2016-12-04 19:55:28 has model risk score 0.61; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3514030",
+          "C12382-K1"
+        ]
+      },
+      {
+        "claim": "No response received within 24 hours",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "C12382",
+          "C12382-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1066",
+      "CC-1673",
+      "CC-2964"
+    ],
+    "summary": "HHG-001 reviewed 3514030 using transaction timeline, identity signals, and prior-case memory. Assessment: uncertain (0.42), pattern none.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-001"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 4,
+      "assumed_response": "No response received within 24 hours"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R1: investigation warranted before action"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: weak signal requires verification before block"
+      }
+    ],
+    "final": [
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "R4: no reply within 24 hours"
+      }
+    ],
+    "what_changed": "The controlled customer-validation response was incorporated and the policy decision was recomputed."
+  },
+  "sar": {
+    "file": false,
+    "reason": "Policy 3a: report threshold is not met on the available evidence.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Current evidence has been documented; the case remains open for the recommended controlled action.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

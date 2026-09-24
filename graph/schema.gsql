@@ -1,0 +1,106 @@
+CREATE VERTEX FG_Customer (
+  PRIMARY_ID customer_id STRING
+);
+
+CREATE VERTEX FG_Card (
+  PRIMARY_ID card_id STRING,
+  customer_id STRING,
+  card1 UINT,
+  network STRING,
+  card_type STRING
+);
+
+CREATE VERTEX FG_Transaction (
+  PRIMARY_ID transaction_id STRING,
+  customer_id STRING,
+  card_id STRING,
+  ts DATETIME,
+  amount FLOAT,
+  channel STRING,
+  risk_score FLOAT,
+  product_code STRING,
+  billing_region STRING,
+  purchaser_email STRING,
+  recipient_email STRING,
+  device_id STRING
+);
+
+CREATE VERTEX FG_DeviceProfile (
+  PRIMARY_ID device_id STRING,
+  device_info STRING,
+  os STRING,
+  browser STRING,
+  screen STRING,
+  is_proxy STRING,
+  device_status STRING
+);
+
+CREATE VERTEX FG_BillingRegion (
+  PRIMARY_ID region_id STRING
+);
+
+CREATE VERTEX FG_EmailDomain (
+  PRIMARY_ID domain STRING
+);
+
+CREATE VERTEX FG_ClosedCase (
+  PRIMARY_ID case_id STRING,
+  outcome STRING,
+  pattern STRING,
+  opened_at DATETIME,
+  closed_at DATETIME,
+  exposure_usd FLOAT,
+  report_filed BOOL,
+  analyst_notes STRING
+);
+
+CREATE VERTEX FG_InvestigationCase (
+  PRIMARY_ID case_id STRING,
+  status STRING,
+  verdict STRING,
+  fraud_probability FLOAT,
+  pattern STRING,
+  exposure_usd FLOAT,
+  summary STRING,
+  opened_at DATETIME,
+  updated_at DATETIME
+);
+
+CREATE VERTEX FG_Evidence (
+  PRIMARY_ID evidence_id STRING,
+  claim STRING,
+  source STRING,
+  ref STRING,
+  polarity STRING
+);
+
+CREATE VERTEX FG_PolicyChunk (
+  PRIMARY_ID chunk_id STRING,
+  rule_id STRING,
+  content STRING
+);
+
+CREATE DIRECTED EDGE FG_OWNS (FROM FG_Customer, TO FG_Card);
+CREATE DIRECTED EDGE FG_MADE (FROM FG_Card, TO FG_Transaction);
+CREATE DIRECTED EDGE FG_NEXT (FROM FG_Transaction, TO FG_Transaction, delta_seconds UINT);
+CREATE DIRECTED EDGE FG_FROM_DEVICE (FROM FG_Transaction, TO FG_DeviceProfile);
+CREATE DIRECTED EDGE FG_BILLED_IN (FROM FG_Transaction, TO FG_BillingRegion);
+CREATE DIRECTED EDGE FG_PURCHASER_EMAIL (FROM FG_Transaction, TO FG_EmailDomain);
+CREATE DIRECTED EDGE FG_RECIPIENT_EMAIL (FROM FG_Transaction, TO FG_EmailDomain);
+CREATE DIRECTED EDGE FG_INVOLVES (FROM FG_ClosedCase, TO FG_Transaction);
+CREATE DIRECTED EDGE FG_ON_CARD (FROM FG_ClosedCase, TO FG_Card);
+CREATE DIRECTED EDGE FG_CONNECTED_CARD (FROM FG_ClosedCase, TO FG_Card);
+CREATE DIRECTED EDGE FG_CASE_INVOLVES (FROM FG_InvestigationCase, TO FG_Transaction);
+CREATE DIRECTED EDGE FG_CASE_ON_CARD (FROM FG_InvestigationCase, TO FG_Card);
+CREATE DIRECTED EDGE FG_CASE_HAS_EVIDENCE (FROM FG_InvestigationCase, TO FG_Evidence);
+CREATE DIRECTED EDGE FG_EVIDENCE_ABOUT_CASE (FROM FG_Evidence, TO FG_ClosedCase);
+CREATE DIRECTED EDGE FG_EVIDENCE_ABOUT_TRANSACTION (FROM FG_Evidence, TO FG_Transaction);
+CREATE DIRECTED EDGE FG_GROUNDED_BY (FROM FG_InvestigationCase, TO FG_PolicyChunk);
+
+CREATE GRAPH FraudGraph(
+  FG_Customer, FG_Card, FG_Transaction, FG_DeviceProfile, FG_BillingRegion, FG_EmailDomain,
+  FG_ClosedCase, FG_InvestigationCase, FG_Evidence, FG_PolicyChunk,
+  FG_OWNS, FG_MADE, FG_NEXT, FG_FROM_DEVICE, FG_BILLED_IN, FG_PURCHASER_EMAIL, FG_RECIPIENT_EMAIL,
+  FG_INVOLVES, FG_ON_CARD, FG_CONNECTED_CARD, FG_CASE_INVOLVES, FG_CASE_ON_CARD,
+  FG_CASE_HAS_EVIDENCE, FG_EVIDENCE_ABOUT_CASE, FG_EVIDENCE_ABOUT_TRANSACTION, FG_GROUNDED_BY
+);

@@ -1,0 +1,126 @@
+{
+  "case_id": "HHG-014",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.93,
+    "pattern": "undocumented",
+    "pattern_description": "A repeated Samsung device profile links online purchases across unrelated cardholders and prior confirmed fraud cases. The shared origin is coordinated abuse outside the five documented typologies.",
+    "affected_txn_ids": [
+      "3478561"
+    ],
+    "first_suspicious_txn_id": "3478561",
+    "connected_card_ids": [
+      "C06617-K1",
+      "C09733-K1"
+    ],
+    "connected_device_profiles": [
+      "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080"
+    ],
+    "exposure_usd": 74.96,
+    "evidence": [
+      {
+        "claim": "Flagged online transaction of $74.96 at 2016-11-22 16:11:00 has model risk score 0.05; score was treated as a trigger, not a verdict.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3478561",
+          "C13487-K1"
+        ]
+      },
+      {
+        "claim": "Online identity profile: SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080. Device-new=True; proxy signal=False.",
+        "source": "graph",
+        "ref": "q_trigger_context",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "The exact Samsung SM-G935F / Android 7.0 / Chrome 62 profile appears in confirmed undocumented fraud cases CC-2985 and CC-3035, linking multiple cards to a coordinated origin.",
+        "source": "graph",
+        "ref": "q_shared_device_neighbors",
+        "entity_ids": [
+          "CC-2985",
+          "CC-3035",
+          "C06617-K1",
+          "C09733-K1"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2985",
+      "CC-3035"
+    ],
+    "summary": "HHG-014 reviewed 3478561 using transaction timeline, identity signals, and prior-case memory. Assessment: fraud (0.93), pattern undocumented.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-HHG-014"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R9: documented as coordinated undocumented abuse"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R9: coordinated undocumented abuse requires report"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: human review required for undocumented pattern"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: monitor every card sharing origin"
+      }
+    ],
+    "final": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R9: documented as coordinated undocumented abuse"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R9: coordinated undocumented abuse requires report"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: human review required for undocumented pattern"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: monitor every card sharing origin"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "Policy 3a/R2: strong suspicion meets a report threshold.",
+    "narrative": "On 2016-11-22, customer C13487 reported or was alerted to activity on card C13487-K1. The reviewed transaction 3478561 was a online purchase of $74.96. The transaction occurred at 2016-11-22 16:11:00 under product code C. The bank's detection model assigned a risk score of 0.05, which prompted investigation. Graph review identified the following pattern: undocumented. The customer denied authorization or evidence established strong suspicion, and the bank assessed fraud probability at 0.93. The total identified suspicious exposure is $74.96. The bank created an internal case, preserved supporting transaction and graph evidence, and will seek the required approval for containment and filing.",
+    "subjects": [
+      "C13487",
+      "C13487-K1",
+      "3478561"
+    ],
+    "total_amount_usd": 74.96,
+    "activity_dates": [
+      "2016-11-22",
+      "2016-11-22"
+    ]
+  },
+  "stop_reason": "Independent evidence meets the policy confidence threshold.",
+  "tool_calls": 6,
+  "tokens": 0,
+  "latency_s": 0.0
+}

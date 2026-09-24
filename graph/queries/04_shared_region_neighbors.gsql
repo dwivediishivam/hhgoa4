@@ -1,0 +1,7 @@
+CREATE QUERY q_shared_region_neighbors(VERTEX<FG_BillingRegion> region, DATETIME window_start, DATETIME window_end) FOR GRAPH FraudGraph {
+  start = {region};
+  txns = SELECT t FROM start:r -(<FG_BILLED_IN)- FG_Transaction:t
+    WHERE t.ts >= window_start AND t.ts <= window_end;
+  cards = SELECT c FROM txns:t -(<FG_MADE)- FG_Card:c;
+  PRINT start, txns, cards;
+}
